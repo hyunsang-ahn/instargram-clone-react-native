@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
+import BottomTab from '../components/home/BottomTab';
+import { bottomTabIcons } from '../components/home/BottomTab';
 import Header from '../components/home/Header'
 import Post from '../components/home/Post';
 import Stories from '../components/home/Stories';
@@ -15,6 +17,7 @@ const HomeScreen = () => {
         ))}
 
       </ScrollView>
+      <BottomTab icons={bottomTabIcons} />
     </SafeAreaView>
   );
 };
