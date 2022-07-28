@@ -13,7 +13,7 @@ const postFooterIcons = [
   },
   {
     name: 'Share',
-    imageUrl: 'https://img.icons8.com/ios-filled/72/sent.png',
+    imageUrl: 'https://img.icons8.com/fluency-systems-regular/344/sent.png',
   },
   {
     name: 'Save',
