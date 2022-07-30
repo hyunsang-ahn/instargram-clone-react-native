@@ -39,3 +39,5 @@ npm run android
 ```
 yarn add react-native-safe-area-view 
 yarn add react-native-safe-area-context
+yarn add formik
+yarn add yup
