@@ -26,7 +26,7 @@
 
 For production environments...
 
-```sh
+```
 npx create-react-natvie-app instagram-clone
 
 cd instargram-clone
