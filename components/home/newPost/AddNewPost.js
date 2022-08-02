@@ -6,7 +6,7 @@ const AddNewPost = ({ navigation }) => {
     <View style={styles.container}>
       <Header navigation={navigation} />
       {/* PostForm */}
-      <FormikPostUploader />
+      <FormikPostUploader navigation={navigation} />
     </View>
   )
 }

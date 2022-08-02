@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import { Divider } from 'react-native-elements';
-
+import validUrl from 'valid-url'
 const PLACEHOLDER_IMG = 'https://pacificpatiostructures.com/wp-content/uploads/2016/06/import_placeholder.png'
 
 const uploadPostSchema = Yup.object().shape({
@@ -15,12 +15,16 @@ const uploadPostSchema = Yup.object().shape({
 
 
 
-const FormikPostUploader = () => {
+const FormikPostUploader = ({ navigation }) => {
   const [thembnailUrl, setThembnailUrl] = useState(PLACEHOLDER_IMG)
   return (
     <Formik
       initialValues={{ caption: '', imageUrl: '' }}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => {
+        console.log(values)
+        console.log('your post was submitted successFully!')
+        navigation.goBack()
+      }}
       validationSchema={uploadPostSchema}
       validateOnMount={true}
     >
@@ -33,7 +37,12 @@ const FormikPostUploader = () => {
             justifyContent: 'space-between',
             flexDirection: 'row'
           }}>
-            <Image source={{ uri: thembnailUrl ? thembnailUrl : PLACEHOLDER_IMG }} style={{ width: 100, height: 100 }} />
+            <Image source={{
+              uri: validUrl.isUri(thembnailUrl)
+                ? thembnailUrl
+                : PLACEHOLDER_IMG
+            }}
+              style={{ width: 100, height: 100 }} />
             <View style={{ flex: 1, marginLeft: 12 }}>
 
               <TextInput
