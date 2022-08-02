@@ -33,10 +33,11 @@ const FormikPostUploader = () => {
             justifyContent: 'space-between',
             flexDirection: 'row'
           }}>
-            <Image source={{ uri: PLACEHOLDER_IMG }} style={{ width: 100, height: 100 }} />
+            <Image source={{ uri: thembnailUrl ? thembnailUrl : PLACEHOLDER_IMG }} style={{ width: 100, height: 100 }} />
             <View style={{ flex: 1, marginLeft: 12 }}>
 
               <TextInput
+                onChange={(e) => setThembnailUrl(e.nativeEvent.text)}
                 style={{ color: 'white', fontSize: 20 }}
                 placeholder='write caption....'
                 placeholderTextColor='gray'
