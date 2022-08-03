@@ -7,8 +7,9 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image source={{ uri: INSTAGRAM_LOGO, height: 100, width: 100 }} />
-        <LoginForm />
       </View>
+      <LoginForm />
+
     </View>
   )
 }
