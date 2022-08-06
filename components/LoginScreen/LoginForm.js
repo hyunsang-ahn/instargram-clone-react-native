@@ -6,46 +6,48 @@ import Validator from 'email-validator'
 import { firebase, db } from '../../firebase'
 
 
-const SignupForm = ({ navigation }) => {
 
-  const SignupFormSchema = Yup.object().shape({
+const LoginForm = ({ navigation }) => {
+
+  const LoginFormSchema = Yup.object().shape({
     email: Yup.string().email().required('An Email is required'),
-    password: Yup.string().required().min(8, 'Yoru password has to have at least 8 characters'),
-    username: Yup.string().required().min(2, 'A username is required')
+    password: Yup.string().required().min(8, 'Yoru password has to have at least 8 characters')
   })
-
-  const getRandomProfilePicture = async () => {
-    const response = await fetch('https://randomuser.me/api')
-    const data = await response.json()
-    return data.results[0].picture.large
-  }
-  const onSignup = async (email, password, username) => {
+  const onLogin = async (email, password) => {
     try {
-      const authUser = await firebase.auth().createUserWithEmailAndPassword(email, password)
-      console.log('authUser=========',authUser)
-      db.collection('user').add({
-        owner_uid: authUser.user.uid,
-        username: username,
-        email: authUser.user.email,
-        profile_picture: await getRandomProfilePicture()
-      })
-
-      console.log('firebase user c reated successful !!', email, password)
+      await firebase.auth().signInWithEmailAndPassword(email, password)
+      console.log("fire base Login successful", email, password)
     } catch (error) {
-      Alert.alert('my load......', error.message)
+      Alert.alert(
+        'My Load...', error.message + '\n\n... 가입을 원하시면 아래의 버튼을 클릭해주세요'
+        [{
+          text: 'OK',
+          onPress: () => console.log('OK'),
+          style: 'cancle'
+        },
+        {
+          text: 'Sign Up',
+          onPress: () => navigation.push('SignupScreen'),
+          style: 'cancle'
+        }]
+      )
     }
   }
   return (
     <View style={styles.wrapper} >
       <Formik
-        initialValues={{ email: '', password: '', username: '' }}
-        onSubmit={(values) => onSignup(values.email, values.password, values.username)}
+        initialValues={{ email: '', password: '' }}
+        onSubmit={values => {
+          onLogin(values.email, values.password)
+        }}
 
-        validationSchema={SignupFormSchema}
+        validationSchema={LoginFormSchema}
         validateOnMount={true}
       >
-        {({ values, handleChange, handleBlur, handleSubmit, isValid }) => {
-          console.log(isValid)
+        {({ handleChange, handleBlur, handleSubmit, values, isValid }) => {
+          console.log(values.email)
+
+          console.log(Validator.validate(values.email))
           return (
             <>
               <View style={[styles.inputField, {
@@ -53,7 +55,7 @@ const SignupForm = ({ navigation }) => {
               }]}>
                 <TextInput
                   placeholderTextColor='#444'
-                  placeholder='Email'
+                  placeholder='Phone number, username or email'
                   autoCapitalize='none'
                   keyboardType='email-address'
                   textContentType='emailAddress'
@@ -63,26 +65,12 @@ const SignupForm = ({ navigation }) => {
                   value={values.email}
                 />
               </View>
-              <View style={[styles.inputField, {
-                borderColor: values.username.length < 1 || values.username.length > 3 ? '#ccc' : 'red'
-              }]}>
 
-                <TextInput
-                  placeholderTextColor='#444'
-                  placeholder='username'
-                  autoCapitalize='none'
-                  textContentType='username'
-                  autoCorrect={false}
-                  autoFocus={true}
-                  onChangeText={handleChange('username')}
-                  onBlur={handleBlur('username')}
-                  value={values.username}
-                />
-              </View>
-
-              <View style={[styles.inputField, {
+              <View style={[styles.inputField,
+              {
                 borderColor: values.password.length < 1 || values.password.length > 6 ? '#ccc' : 'red'
-              }]}>
+              }
+              ]}>
 
                 <TextInput
                   placeholderTextColor='#444'
@@ -91,21 +79,21 @@ const SignupForm = ({ navigation }) => {
                   textContentType='password'
                   autoCorrect={false}
                   autoFocus={true}
-                  secureTextEntry={true}
-
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
+                  secureTextEntry={true}
+
                 />
               </View>
-              {/* <View style={{
-              alignItems: 'flex-end',
-              marginBottom: 30
-            }}>
-              <Text style={{
-                color: '#6bb0f5',
-              }}>Forgot Password?</Text>
-            </View> */}
+              <View style={{
+                alignItems: 'flex-end',
+                marginBottom: 30
+              }}>
+                <Text style={{
+                  color: '#6bb0f5',
+                }}>Forgot Password?</Text>
+              </View>
 
               <Pressable
                 titleSize={20}
@@ -113,13 +101,13 @@ const SignupForm = ({ navigation }) => {
                 onPress={handleSubmit}
                 disabled={!isValid}
               >
-                <Text style={styles.buttonText}>Sign Up</Text>
+                <Text style={styles.buttonText}>Log In</Text>
               </Pressable>
               <View style={styles.signupContainer}>
-                <Text>Already have an account? </Text>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text>Don't have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.push('SignupScreen')}>
                   <Text style={{ color: '#68b0f5' }}>
-                    Log In
+                    Sign Up
 
                   </Text>
                 </TouchableOpacity>
@@ -151,7 +139,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 42,
-    borderRadius: 4
+    borderRadius: 4,
+    flex: 1,
 
   }),
   buttonText: {
@@ -172,4 +161,4 @@ const styles = StyleSheet.create({
 
 
 
-export default SignupForm
+export default LoginForm

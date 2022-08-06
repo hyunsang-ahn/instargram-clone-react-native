@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import LoginForm from '../components/home/LoginScreen/LoginForm'
+import LoginForm from '../components/LoginScreen/LoginForm'
 const INSTAGRAM_LOGO = 'https://www.bodycheckcancer.com/wp-content/uploads/2018/02/hd-instagram-logo-new-design-is-png-format-18.png'
 const LoginScreen = ({ navigation }) => {
   return (
@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     felx: 1,
     backgroundColor: 'white',
     paddingTop: 50,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    height : '100%'
   },
   logoContainer: {
     alignItems: 'center',

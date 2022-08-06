@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
     felx: 1,
     backgroundColor: 'white',
     paddingTop: 50,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
+    height : '100%'
+
   },
   logoContainer: {
     alignItems: 'center',
