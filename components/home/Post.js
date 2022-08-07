@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Divider } from 'react-native-elements'
+import { db, firebase } from '../../firebase'
 const postFooterIcons = [
   {
     name: 'Like',
@@ -27,13 +28,38 @@ const postFooterIcons = [
 
 const Post = ({ post }) => {
   console.log('post===================', post)
+  const handleLike = post => {
+    const currentLikeState = !post.likes_by_user.includes(
+      firebase.auth().currentUser.email
+    )
+
+    db.collection('user')
+      .doc(post.owner_email)
+      .collection('posts')
+      .doc(post.id)
+      .update({
+        likes_by_user: currentLikeState
+          ? firebase.firestore.FieldValue.arrayUnion(
+            firebase.auth().currentUser.email
+          ) :
+          firebase.firestore.FieldValue.arrayRemove(
+            firebase.auth().currentUser.email
+          )
+      }).then(
+        () => {
+          console.log('update complete!')
+        }
+      ).catch(error => {
+        console.error('error!!!!=========', error)
+      })
+  }
   return (
     <View style={{ marginBottom: 30 }}>
       <Divider width={1} orientation='vertical' />
       <PostHeader post={post} />
       <PostImage post={post} />
-      <View style={{ marginTop: 10 }}>
-        <PostFotter />
+      <View style={{ marginTop: 10, height: 'auto', marginBottom: 20 }}>
+        <PostFotter post={post} handleLike={handleLike} />
         <Likes post={post} />
         <Caption post={post} />
         <CommentsSection post={post} />
@@ -71,16 +97,31 @@ const PostImage = ({ post }) => (
   </View>
 )
 
-const PostFotter = () => (
+const PostFotter = ({ handleLike, post }) => (
   <View style={{ flexDirection: 'row' }}>
     <View style={styles.leftFooterIconContainer}>
-      <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[0].imageUrl} />
+      <TouchableOpacity onPress={() => handleLike(post)}>
+        <Image
+          style={styles.footerIcon}
+          source={{ uri: postFooterIcons[0].imageUrl }}
+        ></Image>
+
+      </TouchableOpacity>
+
+
+
+
+
+
       <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[1].imageUrl} />
       <Icon imgStyle={[styles.footerIcon, styles.shareIcon]} imgUrl={postFooterIcons[2].imageUrl} />
 
     </View>
     <View style={{ flex: 1, alignItems: 'flex-end' }}>
-      <Icon imgStyle={styles.footerIcon} imgUrl={postFooterIcons[3].imageUrl} />
+      <Icon
+        imgStyle={styles.footerIcon}
+        imgUrl={postFooterIcons[3].imageUrl}
+      />
 
     </View>
   </View>
@@ -95,34 +136,34 @@ const Icon = ({ imgStyle, imgUrl }) => (
 
 const Likes = ({ post }) => (
   <View style={{ flexDirection: 'row', marginTop: 4 }}>
-    <Text style={{ fontWeight: '600' }}>{post.likes.toLocaleString('en')}명이 좋아합니다</Text>
+    <Text style={{ fontWeight: '600' }}>{post.likes_by_user.length.toLocaleString('en')}명이 좋아합니다</Text>
 
   </View>
 )
 
 const Caption = ({ post }) => (
   <View style={{ marginTop: 5, }}>
-
     <Text>
       <Text style={{ fontWeight: '600' }}>{post.user}</Text>
       <Text>{post.caption}</Text>
     </Text>
-
-
-  </View>
-
-)
-
-const CommentsSection = ({ post }) => (
-  <View style={{ marginTop: 5 }}>
-    {post.comments.length && (
-      <Text style={{ color: 'gray' }}>
-        {post.comments.length > 1 ? '댓글' : ''} {post.comments.length}
-        {post.comments.length > 1 ? '개 모두보기' : '개 보기'}
-      </Text>
-    )}
   </View>
 )
+
+const CommentsSection = ({ post }) => {
+  console.log('CommentsSection post comments============', post.comments)
+  console.log('CommentsSection post comments length============', post.comments.length)
+  return (
+    <View style={{ marginTop: 5 }}>
+      {post.comments.length > 0 && (
+        <Text style={{ color: 'gray' }}>
+          {post.comments.length > 1 ? '댓글' : ''} {post.comments.length}
+          {post.comments.length > 1 ? '개 모두보기' : '개 보기'}
+        </Text>
+      )}
+    </View>
+  )
+}
 
 const Comments = ({ post }) => (
   <>

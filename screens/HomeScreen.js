@@ -10,9 +10,9 @@ import { db } from '../firebase'
 const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([])
   useEffect(() => {
-    db.collectionGroup('posts').onSnapshot(snapshot => {
+    db.collectionGroup('posts').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
       console.log('data======', snapshot.docs.map(doc => doc.data()))
-      setPosts(snapshot.docs.map(doc => doc.data()))
+      setPosts(snapshot.docs.map(post => ({ id: post.id, ...post.data() })))
 
     })
   }, [])
