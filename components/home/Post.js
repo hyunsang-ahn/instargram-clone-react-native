@@ -26,6 +26,7 @@ const postFooterIcons = [
 
 
 const Post = ({ post }) => {
+  console.log('post===================', post)
   return (
     <View style={{ marginBottom: 30 }}>
       <Divider width={1} orientation='vertical' />

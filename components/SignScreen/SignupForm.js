@@ -21,14 +21,20 @@ const SignupForm = ({ navigation }) => {
   }
   const onSignup = async (email, password, username) => {
     try {
-      const authUser = await firebase.auth().createUserWithEmailAndPassword(email, password)
-      console.log('authUser=========',authUser)
-      db.collection('user').add({
-        owner_uid: authUser.user.uid,
-        username: username,
-        email: authUser.user.email,
-        profile_picture: await getRandomProfilePicture()
-      })
+      const authUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+
+      console.log('authUser=========', authUser.user.email)
+
+      db.collection('users')
+        .doc(authUser.user.email)
+        .set({
+          owner_uid: authUser.user.uid,
+          username: username,
+          email: authUser.user.email,
+          profile_picture: await getRandomProfilePicture()
+        })
 
       console.log('firebase user c reated successful !!', email, password)
     } catch (error) {
