@@ -103,7 +103,11 @@ const PostFotter = ({ handleLike, post }) => (
       <TouchableOpacity onPress={() => handleLike(post)}>
         <Image
           style={styles.footerIcon}
-          source={{ uri: postFooterIcons[0].imageUrl }}
+          source={{
+            uri: post.likes_by_user.includes(firebase.auth().currentUser.email)
+              ? postFooterIcons[0].likedImageUrl
+              : postFooterIcons[0].imageUrl
+          }}
         ></Image>
 
       </TouchableOpacity>
