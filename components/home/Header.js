@@ -5,9 +5,9 @@ import { firebase } from '../../firebase'
 const handleSignOut = async () => {
   try {
     firebase.auth().signOut()
-    console.log('Signed Out')
+    // console.log('Signed Out')
   } catch (error) {
-    console.log(error)
+    // console.log(error)
   }
 
 }
@@ -37,7 +37,7 @@ const Header = ({ navigation }) => {
           <Image
             style={styles.icon}
             source={{
-              uri: 'https://img.icons8.com/windows/344/like--v1.png'
+              uri: 'https://img.icons8.com/material-outlined/72/like--v1.png'
             }}
           />
         </TouchableOpacity>
@@ -48,7 +48,7 @@ const Header = ({ navigation }) => {
           <Image
             style={styles.icon}
             source={{
-              uri: 'https://img.icons8.com/ios/344/facebook-messenger--v1.png'
+              uri: 'https://img.icons8.com/material-outlined/72/facebook-messenger--v1.png'
             }}
           />
         </TouchableOpacity>

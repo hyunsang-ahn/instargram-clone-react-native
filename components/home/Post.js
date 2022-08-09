@@ -6,11 +6,11 @@ const postFooterIcons = [
   {
     name: 'Like',
     imageUrl: 'https://img.icons8.com/material-outlined/72/like--v1.png',
-    likedImageUrl: 'https://img.icons8.com/stickers/72/like--v3.png'
+    likedImageUrl: 'https://img.icons8.com/fluency/72/hearts.png'
   },
   {
     name: 'Comment',
-    imageUrl: 'https://img.icons8.com/ios-glyphs/72/speech-bubble--v1.png',
+    imageUrl: 'https://img.icons8.com/material-outlined/72/speech-bubble--v2.png',
   },
   {
     name: 'Share',
@@ -18,7 +18,7 @@ const postFooterIcons = [
   },
   {
     name: 'Save',
-    imageUrl: 'https://img.icons8.com/external-bearicons-glyph-bearicons/344/external-Save-social-media-bearicons-glyph-bearicons.png',
+    imageUrl: 'https://img.icons8.com/material-outlined/72/bookmark-ribbon--v1.png',
   },
 
 
@@ -27,7 +27,7 @@ const postFooterIcons = [
 
 
 const Post = ({ post }) => {
-  console.log('post===================', post)
+  // console.log('post===================', post)
   const handleLike = post => {
     const currentLikeState = !post.likes_by_user.includes(
       firebase.auth().currentUser.email
@@ -47,7 +47,7 @@ const Post = ({ post }) => {
           )
       }).then(
         () => {
-          console.log('update complete!')
+          // console.log('update complete!')
         }
       ).catch(error => {
         console.error('error!!!!=========', error)
@@ -78,10 +78,10 @@ const PostHeader = ({ post }) => (
   <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 5, alignItems: 'center' }}>
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Image source={{ uri: post.profile_picture }} style={styles.story} />
-      <Text style={{ color: 'blue', marginLeft: 5, fontWeight: '700' }}>{post.user}</Text>
+      <Text style={{ color: 'black', marginLeft: 5, fontWeight: '700' }}>{post.user}</Text>
     </View>
     <View>
-      <Text style={{ color: 'blue', fontWeight: '900' }}>...</Text>
+      <Text style={{ color: 'black', fontWeight: '900' }}>...</Text>
 
     </View>
   </View>
@@ -155,8 +155,8 @@ const Caption = ({ post }) => (
 )
 
 const CommentsSection = ({ post }) => {
-  console.log('CommentsSection post comments============', post.comments)
-  console.log('CommentsSection post comments length============', post.comments.length)
+  // console.log('CommentsSection post comments============', post.comments)
+  // console.log('CommentsSection post comments length============', post.comments.length)
   return (
     <View style={{ marginTop: 5 }}>
       {post.comments.length > 0 && (

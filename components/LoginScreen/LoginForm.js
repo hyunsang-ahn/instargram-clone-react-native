@@ -16,7 +16,7 @@ const LoginForm = ({ navigation }) => {
   const onLogin = async (email, password) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password)
-      console.log("fire base Login successful", email, password)
+      // console.log("fire base Login successful", email, password)
     } catch (error) {
       Alert.alert(
         'My Load...', error.message + '\n\n... 가입을 원하시면 아래의 버튼을 클릭해주세요'
@@ -45,9 +45,9 @@ const LoginForm = ({ navigation }) => {
         validateOnMount={true}
       >
         {({ handleChange, handleBlur, handleSubmit, values, isValid }) => {
-          console.log(values.email)
+          // console.log(values.email)
 
-          console.log(Validator.validate(values.email))
+          // console.log(Validator.validate(values.email))
           return (
             <>
               <View style={[styles.inputField, {

@@ -5,7 +5,10 @@ const AuthNavigation = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const useHandler = user => user ? setCurrentUser(user) : setCurrentUser(null)
   useEffect(() => {
+    console.log('instagram clone start.. .auth stage...1')
+    console.log('firebase.auth()================',firebase.auth())
     firebase.auth().onAuthStateChanged(user => useHandler(user))
+    console.log('currentUser===============',currentUser)
   }, [])
   return <>{currentUser ? <SignedInStack /> : <SignedOutStack />}</>
 }

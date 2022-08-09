@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react'
 
 const USERS = () => {
-  console.log('USERS COMPONENT START~!!!!!!!')
+  // console.log('USERS COMPONENT START~!!!!!!!')
   const [arr, setArr] = useState([])
   const getRandomProfilePicture = async () => {
     const response = await fetch('https://randomuser.me/api?results=15')

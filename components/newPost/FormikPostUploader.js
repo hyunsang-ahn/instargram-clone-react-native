@@ -22,17 +22,17 @@ const FormikPostUploader = ({ navigation }) => {
 
   const getUserName = () => {
     const user = firebase.auth().currentUser
-    console.log('user=============', db
+    // console.log('user=============', db
       .collection('users')
       .where('owner_uid', "==", user.uid)
-      .limit(1))
+      .limit(1)
     const unsubscribe = db
       .collection('users')
       .where('owner_uid', "==", user.uid)
       .limit(1)
       .onSnapshot(
         snapshot => snapshot.docs.map(doc => {
-          console.log('doc================', doc.data())
+          // console.log('doc================', doc.data())
           setCurrentLoggedInUser({
             username: doc.data().username,
             profilePicture: doc.data().profile_picture
@@ -47,8 +47,8 @@ const FormikPostUploader = ({ navigation }) => {
   }, [])
 
   const upLoadPostToFireBase = (imageUrl, caption) => {
-    console.log('======', firebase.auth().currentUser.email)
-    console.log('currentLoggedInUser==============', currentLoggedInUser)
+    // console.log('======', firebase.auth().currentUser.email)
+    // console.log('currentLoggedInUser==============', currentLoggedInUser)
     const unsubscribe = db
       .collection('user')
       .doc(firebase.auth().currentUser.email)
@@ -96,7 +96,6 @@ const FormikPostUploader = ({ navigation }) => {
             <View style={{ flex: 1, marginLeft: 12 }}>
 
               <TextInput
-                onChange={(e) => setThembnailUrl(e.nativeEvent.text)}
                 style={{ color: 'white', fontSize: 20 }}
                 placeholder='write caption....'
                 placeholderTextColor='gray'
@@ -111,6 +110,7 @@ const FormikPostUploader = ({ navigation }) => {
           <Divider width={0.2} orientation='vertical' />
           <TextInput
             style={{ color: 'white', fontSize: 20 }}
+            onChange={(e) => setThembnailUrl(e.nativeEvent.text)}
 
             placeholder='enter image url'
             placeholderTextColor='gray'

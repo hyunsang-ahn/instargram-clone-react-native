@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 
 const Stories = () => {
-  console.log('Stories COMPONENT START~!!!!!!!')
+  // console.log('Stories COMPONENT START~!!!!!!!')
   const [arr, setArr] = useState([])
   const getRandomProfilePicture = async () => {
     const response = await fetch('https://randomuser.me/api?results=15')
@@ -31,7 +31,7 @@ const Stories = () => {
         {arr?.map((story, index) => (
           <View key={index} style={{ alignItems: 'center' }}>
             <Image source={{ uri: story.image }} style={styles.story} />
-            <Text style={{ color: 'blue' }}>
+            <Text style={{ color: 'black' }}>
               {story.user.length > 11
                 ? story.user.slice(0, 10).toLocaleLowerCase() + '...'
                 : story.user.toLocaleLowerCase()}

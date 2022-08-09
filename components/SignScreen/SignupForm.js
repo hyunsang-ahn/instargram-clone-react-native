@@ -25,7 +25,7 @@ const SignupForm = ({ navigation }) => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
 
-      console.log('authUser=========', authUser.user.email)
+      // console.log('authUser=========', authUser.user.email)
 
       db.collection('users')
         .doc(authUser.user.email)
@@ -36,7 +36,7 @@ const SignupForm = ({ navigation }) => {
           profile_picture: await getRandomProfilePicture()
         })
 
-      console.log('firebase user c reated successful !!', email, password)
+      // console.log('firebase user c reated successful !!', email, password)
     } catch (error) {
       Alert.alert('my load......', error.message)
     }
@@ -51,7 +51,7 @@ const SignupForm = ({ navigation }) => {
         validateOnMount={true}
       >
         {({ values, handleChange, handleBlur, handleSubmit, isValid }) => {
-          console.log(isValid)
+          // console.log(isValid)
           return (
             <>
               <View style={[styles.inputField, {
